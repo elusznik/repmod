@@ -1,0 +1,5 @@
+Pipfile
+Pipfile.lock
+bot1.py
+praw.ini.old
+.vscode/settings.json
