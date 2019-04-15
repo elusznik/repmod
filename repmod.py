@@ -1,5 +1,6 @@
 import praw
 import re
+import time
 
 def main():
     print("Authenticating...")
@@ -14,15 +15,17 @@ def main():
             print("." + line.strip().replace(".",r"\.") + ".")
     f.close()
 
-    for item in sub.mod.spam():
-        link_approved = False
-        if type(item) is praw.models.Comment: 
-            link_approved = any(re.search(site, item.body.lower(), re.IGNORECASE) for site in sites)
-        if type(item) is praw.models.Submission:
-            link_approved = any(re.search(site,item.title.lower(), re.IGNORECASE) for site in sites) or any(re.search(site, item.url.lower(), re.IGNORECASE) for site in sites) or any(re.search(site, item.selftext.lower(), re.IGNORECASE) for site in sites)
-        if link_approved:
-            item.mod.approve()
-            print("Item {} approved".format(item))
+    while True:
+        for item in sub.mod.spam():
+            link_approved = False
+            if type(item) is praw.models.Comment: 
+                link_approved = any(re.search(site, item.body.lower(), re.IGNORECASE) for site in sites)
+            if type(item) is praw.models.Submission:
+                link_approved = any(re.search(site,item.title.lower(), re.IGNORECASE) for site in sites) or any(re.search(site, item.url.lower(), re.IGNORECASE) for site in sites) or any(re.search(site, item.selftext.lower(), re.IGNORECASE) for site in sites)
+            if link_approved:
+                item.mod.approve()
+                print("Item {} approved".format(item))
+        time.sleep(300)
 
 if __name__ == "__main__":
     main()
