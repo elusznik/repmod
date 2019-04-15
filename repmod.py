@@ -16,13 +16,13 @@ def main():
 
     for item in sub.mod.spam():
         link_approved = False
-        if type(item) is praw.models.Comment:
-            print(item.body)
+        if type(item) is praw.models.Comment: 
             link_approved = any(re.search(site, item.body.lower(), re.IGNORECASE) for site in sites)
         if type(item) is praw.models.Submission:
             link_approved = any(re.search(site,item.title.lower(), re.IGNORECASE) for site in sites) or any(re.search(site, item.url.lower(), re.IGNORECASE) for site in sites) or any(re.search(site, item.selftext.lower(), re.IGNORECASE) for site in sites)
         if link_approved:
-            print("Item {} to approve".format(item))
+            item.mod.approve()
+            print("Item {} approved".format(item))
 
 if __name__ == "__main__":
     main()
