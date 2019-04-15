@@ -1,6 +1,7 @@
 Pipfile
 Pipfile.lock
 bot1.py
+praw.ini
 praw.ini.old
 .vscode/settings.json
 .vscode/launch.json
