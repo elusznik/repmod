@@ -1,5 +1,7 @@
 """
 reddit bot for auto-approving website links in rep-related subreddits
+witten by /u/elusznik
+deticated for /r/FashionReps
 """
 import time
 import re
@@ -11,7 +13,7 @@ def main():
     """
 
     print("Authenticating...")
-    reddit = praw.Reddit("repmod")
+    reddit = praw.Reddit("repmod", user_agent="repmod (by /u/elusznik)")
     print("Authenticated as {}\n".format(reddit.user.me()))
     sub = reddit.subreddit("FashionReps")
 
@@ -22,12 +24,20 @@ def main():
             # print("." + line.strip().replace(".", r"\.") + ".")
             print(line.strip())
     file.close()
+    print()
 
     review = 0
     find = 0
     news = 0
+    top_posts = {}
+    top_posts["⚠️ MODPOST ⚠️"] = []
+    top_posts["REVIEW"] = []
+    top_posts["FIND"] = []
+    top_posts["NEWS"] = []
+    week_summary = ""
+
     for item in sub.top("week"):
-        top_posts = {"MOD":[], "REVIEW":[], "FIND":[], "NEWS":[]}
+
         #print(item.title)
         # if item.link_flair_template_id:
         #     print(item.link_flair_template_id)
@@ -35,18 +45,34 @@ def main():
         #     print(item.title)
         #     print(item.link_flair_text)
         #     print(item.permalink+'\n')
+
         if item.link_flair_text:
             if item.link_flair_text == "⚠️ MODPOST ⚠️":
-                top_posts[item.link_flair_text].append(item.permalink)
+                top_posts[item.link_flair_text].append((item.title, item.permalink))
 
             if item.link_flair_text == "REVIEW" and review < 10:
-                top_posts[item.link_flair_text].append(item.permalink)
+                top_posts[item.link_flair_text].append((item.title, item.permalink))
+                review += 1
 
             if item.link_flair_text == "FIND" and find < 10:
-                top_posts[item.link_flair_text].append(item.permalink)
+                top_posts[item.link_flair_text].append((item.title, item.permalink))
+                find += 1
 
             if item.link_flair_text == "NEWS" and news < 10:
-                top_posts[item.link_flair_text].append(item.permalink)
+                top_posts[item.link_flair_text].append((item.title, item.permalink))
+                news += 1
+
+    for flair, posts in top_posts.items():
+        if posts:
+            # print(flair)
+            week_summary += flair + "\n"
+            for post in posts:
+                # print("[{}](https://www.reddit.com".format(post[0]) + post[1] + ")")
+                # week_summary += post[0] + "\n"
+                # week_summary += post[1] + "\n"
+                week_summary += "[{}](https://www.reddit.com".format(post[0]) + post[1] + ")\n"
+
+    print(week_summary.rstrip())
 
     # while True:
     #     for item in sub.mod.spam():
