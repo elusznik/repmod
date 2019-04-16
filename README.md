@@ -41,7 +41,7 @@ username=
 user_agent=repmod (by /u/elusznik)
 
 ```
-With linec `client_id`, `client_secret`, `password` and `username` being filled with your API keys and bot account's username and password.
+With lines `client_id`, `client_secret`, `password` and `username` being filled with your API keys and bot account's username and password.
 
 After configuring, you will just need to run
 
