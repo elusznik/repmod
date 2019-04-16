@@ -61,7 +61,7 @@ Then, run
 and select your desired editor.
 Then, add the line
 
-`00 12 * * sat cd BOTDIR; python3 roundup.py`
+`00 9 * * sat cd BOTDIR; python3 roundup.py`
 
-with `BOTDIR` being the directory in which scripts are located. This particular cron setting will run the script **on Saturday at 12:00 (midday)**.
+with `BOTDIR` being the directory in which scripts are located. This particular cron setting will run the script **on Saturday at 9:00**.
 Save & close your editor. The weekly roundup script should now be set up.
