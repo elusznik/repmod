@@ -27,53 +27,53 @@ def main():
     file.close()
     print()
 
-    review = 0
-    find = 0
-    news = 0
-    top_posts = {}
-    top_posts["⚠️ MODPOST ⚠️"] = []
-    top_posts["REVIEW"] = []
-    top_posts["FIND"] = []
-    top_posts["NEWS"] = []
-    week_summary = ""
-    week_summary_title = "Past week's summary"
+    # review = 0
+    # find = 0
+    # news = 0
+    # top_posts = {}
+    # top_posts["⚠️ MODPOST ⚠️"] = []
+    # top_posts["REVIEW"] = []
+    # top_posts["FIND"] = []
+    # top_posts["NEWS"] = []
+    # week_summary = ""
+    # week_summary_title = "Past week's summary"
 
-    for item in sub.top("week"):
+    # for item in sub.top("week"):
 
-        #print(item.title)
-        # if item.link_flair_template_id:
-        #     print(item.link_flair_template_id)
-        # if item.link_flair_text:
-        #     print(item.title)
-        #     print(item.link_flair_text)
-        #     print(item.permalink+'\n')
+    #     #print(item.title)
+    #     # if item.link_flair_template_id:
+    #     #     print(item.link_flair_template_id)
+    #     # if item.link_flair_text:
+    #     #     print(item.title)
+    #     #     print(item.link_flair_text)
+    #     #     print(item.permalink+'\n')
 
-        if item.link_flair_text:
-            if item.link_flair_text == "⚠️ MODPOST ⚠️":
-                top_posts[item.link_flair_text].append((item.title, item.permalink))
+    #     if item.link_flair_text:
+    #         if item.link_flair_text == "⚠️ MODPOST ⚠️":
+    #             top_posts[item.link_flair_text].append((item.title, item.permalink))
 
-            if item.link_flair_text == "REVIEW" and review < 10:
-                top_posts[item.link_flair_text].append((item.title, item.permalink))
-                review += 1
+    #         if item.link_flair_text == "REVIEW" and review < 10:
+    #             top_posts[item.link_flair_text].append((item.title, item.permalink))
+    #             review += 1
 
-            if item.link_flair_text == "FIND" and find < 10:
-                top_posts[item.link_flair_text].append((item.title, item.permalink))
-                find += 1
+    #         if item.link_flair_text == "FIND" and find < 10:
+    #             top_posts[item.link_flair_text].append((item.title, item.permalink))
+    #             find += 1
 
-            if item.link_flair_text == "NEWS" and news < 10:
-                top_posts[item.link_flair_text].append((item.title, item.permalink))
-                news += 1
+    #         if item.link_flair_text == "NEWS" and news < 10:
+    #             top_posts[item.link_flair_text].append((item.title, item.permalink))
+    #             news += 1
 
-    for flair, posts in top_posts.items():
-        if posts:
-            week_summary += flair + "\n\n"
-            for post in posts:
-                week_summary += "[{}](https://www.reddit.com".format(post[0]) + post[1] + ")\n"
-            week_summary += "\n"
+    # for flair, posts in top_posts.items():
+    #     if posts:
+    #         week_summary += flair + "\n\n"
+    #         for post in posts:
+    #             week_summary += "[{}](https://www.reddit.com".format(post[0]) + post[1] + ")\n"
+    #         week_summary += "\n"
 
-    print(week_summary_title)
-    print(week_summary.rstrip())
-    sub.submit(week_summary_title, selftext=week_summary.rstrip())
+    # print(week_summary_title)
+    # print(week_summary.rstrip())
+    # sub.submit(week_summary_title, selftext=week_summary.rstrip())
 
     while True:
         for item in sub.mod.spam():
