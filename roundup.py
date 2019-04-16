@@ -14,7 +14,7 @@ def main():
     print("Authenticating...")
     reddit = praw.Reddit("repmod", user_agent="repmod (by /u/elusznik)")
     print("Authenticated as {}\n".format(reddit.user.me()))
-    sub = reddit.subreddit("FashionReps")
+    sub = reddit.subreddit("eluszniktest")
 
     review = 0
     find = 0
@@ -62,7 +62,8 @@ def main():
 
     print(week_summary_title)
     print(week_summary.rstrip())
-    sub.submit(week_summary_title, selftext=week_summary.rstrip())
+    if week_summary:
+        sub.submit(week_summary_title, selftext=week_summary.rstrip())
 
 if __name__ == "__main__":
     main()
