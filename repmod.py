@@ -1,5 +1,6 @@
 """
 reddit bot for auto-approving website links in rep-related subreddits
+weekly roundup included since 1.1 alpha
 witten by /u/elusznik
 deticated for /r/FashionReps
 """
@@ -19,9 +20,9 @@ def main():
 
     sites = []
     with open("sites.txt", "r", encoding="utf-8") as file:
+        print("Approved sites:")
         for line in file:
             sites.append("." + line.strip().replace(".", r"\.") + ".")
-            # print("." + line.strip().replace(".", r"\.") + ".")
             print(line.strip())
     file.close()
     print()
@@ -35,6 +36,7 @@ def main():
     top_posts["FIND"] = []
     top_posts["NEWS"] = []
     week_summary = ""
+    week_summary_title = "Past week's summary"
 
     for item in sub.top("week"):
 
@@ -64,27 +66,30 @@ def main():
 
     for flair, posts in top_posts.items():
         if posts:
-            # print(flair)
-            week_summary += flair + "\n"
+            week_summary += flair + "\n\n"
             for post in posts:
-                # print("[{}](https://www.reddit.com".format(post[0]) + post[1] + ")")
-                # week_summary += post[0] + "\n"
-                # week_summary += post[1] + "\n"
                 week_summary += "[{}](https://www.reddit.com".format(post[0]) + post[1] + ")\n"
+            week_summary += "\n"
 
+    print(week_summary_title)
     print(week_summary.rstrip())
+    sub.submit(week_summary_title, selftext=week_summary.rstrip())
 
-    # while True:
-    #     for item in sub.mod.spam():
-    #         link_approved = False
-    #         if isinstance(item, praw.models.Comment):
-    #             link_approved = any(re.search(site, item.body.lower(), re.IGNORECASE) for site in sites)
-    #         if isinstance(item, praw.models.Submission):
-    #             link_approved = any(re.search(site, item.title.lower(), re.IGNORECASE) for site in sites) or any(re.search(site, item.url.lower(), re.IGNORECASE) for site in sites) or any(re.search(site, item.selftext.lower(), re.IGNORECASE) for site in sites)
-    #         if link_approved:
-    #             item.mod.approve()
-    #             print("Item {} approved".format(item))
-    #     time.sleep(300)
+    while True:
+        for item in sub.mod.spam():
+            link_approved = False
+            if isinstance(item, praw.models.Comment):
+                link_approved = any(re.search(site, item.body.lower(), re.IGNORECASE) for site in sites)
+                if link_approved:
+                    print(item.body)
+            elif isinstance(item, praw.models.Submission):
+                link_approved = any(re.search(site, item.title.lower(), re.IGNORECASE) for site in sites) or any(re.search(site, item.url.lower(), re.IGNORECASE) for site in sites) or any(re.search(site, item.selftext.lower(), re.IGNORECASE) for site in sites)
+                if link_approved:
+                    print(item.title)
+            if link_approved:
+                item.mod.approve()
+                print("Item {} approved".format(item))
+        time.sleep(300)
 
 if __name__ == "__main__":
     main()
