@@ -14,7 +14,7 @@ def main():
     print("Authenticating...")
     reddit = praw.Reddit("repmod", user_agent="repmod (by /u/elusznik)")
     print("Authenticated as {}\n".format(reddit.user.me()))
-    sub = reddit.subreddit("eluszniktest")
+    sub = reddit.subreddit("FashionReps")
 
     review = 0
     find = 0
