@@ -17,6 +17,9 @@ def main():
             print("." + line.strip().replace(".", r"\.") + ".")
     file.close()
 
+    for item in sub.top("week"):
+        print(item.title)
+
     while True:
         for item in sub.mod.spam():
             link_approved = False
