@@ -24,7 +24,7 @@ def main():
     top_posts["REVIEW"] = []
     top_posts["FIND"] = []
     top_posts["NEWS"] = []
-    
+
     week_summary = ""
     week_summary_title = "FashionReps Weekly Roundup"
     week_summary_flair_id = "1e13f32e-61c9-11e9-9893-0e1929d25dca"
@@ -41,25 +41,25 @@ def main():
 
         if item.link_flair_text:
             if item.link_flair_text == "⚠️ MODPOST ⚠️":
-                top_posts[item.link_flair_text].append((item.title, item.permalink))
+                top_posts[item.link_flair_text].append((item.title, item.permalink, item.author.name))
 
             if item.link_flair_text == "REVIEW" and review < 10:
-                top_posts[item.link_flair_text].append((item.title, item.permalink))
+                top_posts[item.link_flair_text].append((item.title, item.permalink, item.author.name))
                 review += 1
 
             if item.link_flair_text == "FIND" and find < 10:
-                top_posts[item.link_flair_text].append((item.title, item.permalink))
+                top_posts[item.link_flair_text].append((item.title, item.permalink, item.author.name))
                 find += 1
 
             if item.link_flair_text == "NEWS" and news < 10:
-                top_posts[item.link_flair_text].append((item.title, item.permalink))
+                top_posts[item.link_flair_text].append((item.title, item.permalink, item.author.name))
                 news += 1
 
     for flair, posts in top_posts.items():
         if posts:
             week_summary += "#" + flair + "\n\n"
             for post in posts:
-                week_summary += "[{}](https://www.reddit.com".format(post[0]) + post[1] + ")\n\n"
+                week_summary += "[{}](https://www.reddit.com".format(post[0]) + post[1] + ") - by /u/{}\n\n".format(post[2])
             week_summary += "\n"
 
     print(week_summary_title)
