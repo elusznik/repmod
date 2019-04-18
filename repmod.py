@@ -78,17 +78,18 @@ def main():
     while True:
         for item in sub.mod.spam():
             link_approved = False
-            if isinstance(item, praw.models.Comment):
-                link_approved = any(re.search(site, item.body.lower(), re.IGNORECASE) for site in sites)
+            if not item.banned_by:
+                if isinstance(item, praw.models.Comment):
+                    link_approved = any(re.search(site, item.body.lower(), re.IGNORECASE) for site in sites)
+                    if link_approved:
+                        print(item.body)
+                elif isinstance(item, praw.models.Submission):
+                    link_approved = any(re.search(site, item.title.lower(), re.IGNORECASE) for site in sites) or any(re.search(site, item.url.lower(), re.IGNORECASE) for site in sites) or any(re.search(site, item.selftext.lower(), re.IGNORECASE) for site in sites)
+                    if link_approved:
+                        print(item.title)
                 if link_approved:
-                    print(item.body)
-            elif isinstance(item, praw.models.Submission):
-                link_approved = any(re.search(site, item.title.lower(), re.IGNORECASE) for site in sites) or any(re.search(site, item.url.lower(), re.IGNORECASE) for site in sites) or any(re.search(site, item.selftext.lower(), re.IGNORECASE) for site in sites)
-                if link_approved:
-                    print(item.title)
-            if link_approved:
-                item.mod.approve()
-                print("Item {} approved".format(item))
+                    item.mod.approve()
+                    print("Item {} approved".format(item))
         time.sleep(300)
 
 if __name__ == "__main__":
