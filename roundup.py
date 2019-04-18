@@ -25,7 +25,8 @@ def main():
     top_posts["FIND"] = []
     top_posts["NEWS"] = []
     week_summary = ""
-    week_summary_title = "Past week's summary"
+    week_summary_title = "FashionReps Weekly Roundup"
+    week_summary_flair = "WEEKLY NEWS"
 
     for item in sub.top("week"):
 
@@ -55,15 +56,16 @@ def main():
 
     for flair, posts in top_posts.items():
         if posts:
-            week_summary += flair + "\n\n"
+            week_summary += "#" + flair + "\n\n"
             for post in posts:
-                week_summary += "[{}](https://www.reddit.com".format(post[0]) + post[1] + ")\n"
+                week_summary += "[{}](https://www.reddit.com".format(post[0]) + post[1] + ")\n\n"
             week_summary += "\n"
 
     print(week_summary_title)
     print(week_summary.rstrip())
+
     if week_summary:
-        sub.submit(week_summary_title, selftext=week_summary.rstrip())
+        sub.submit(week_summary_title, selftext=week_summary.rstrip(), flair_id="1e13f32e-61c9-11e9-9893-0e1929d25dca")
 
 if __name__ == "__main__":
     main()
