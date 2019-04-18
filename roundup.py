@@ -24,9 +24,10 @@ def main():
     top_posts["REVIEW"] = []
     top_posts["FIND"] = []
     top_posts["NEWS"] = []
+    
     week_summary = ""
     week_summary_title = "FashionReps Weekly Roundup"
-    week_summary_flair = "WEEKLY NEWS"
+    week_summary_flair_id = "1e13f32e-61c9-11e9-9893-0e1929d25dca"
 
     for item in sub.top("week"):
 
@@ -65,7 +66,7 @@ def main():
     print(week_summary.rstrip())
 
     if week_summary:
-        sub.submit(week_summary_title, selftext=week_summary.rstrip(), flair_id="1e13f32e-61c9-11e9-9893-0e1929d25dca")
+        sub.submit(week_summary_title, selftext=week_summary.rstrip(), flair_id=week_summary_flair_id)
 
 if __name__ == "__main__":
     main()
