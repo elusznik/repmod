@@ -90,6 +90,9 @@ def main():
                 if link_approved:
                     item.mod.approve()
                     print("Item {} approved".format(item))
+            else:
+                print("Removed?(by:) {}" .format(item.banned_by))
+        print()
         time.sleep(300)
 
 if __name__ == "__main__":
